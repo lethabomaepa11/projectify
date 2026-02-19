@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/login/Login";
+import AuthLayout from "./layouts/AuthLayout";
+import Signup from "./pages/signup/Signup";
+import EmptyLayout from "./layouts/EmptyLayout";
+import Tutor from "./pages/tutor/Tutor";
+import StudentLayout from "./layouts/StudentLayout";
+import Projects from "./pages/projects/Projects";
+import Leaderboard from "./pages/leaderboard/Leaderboard";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function MyApp() {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        {/* Auth */}
+        <Route path="/" element={<AuthLayout />}>
+          <Route index element={<Login />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+        {/* Student */}
+        <Route path="/projects" element={<StudentLayout />}>
+          <Route index element={<Projects />} />
+          <Route path="mine" element={<Projects />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
+        </Route>
+
+        {/* Tutor */}
+        <Route path="/tutor" element={<EmptyLayout />}>
+          <Route index element={<Tutor />} />
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default MyApp;
