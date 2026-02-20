@@ -33,13 +33,45 @@ export const ProjectProvider = ({
   const [state, dispatch] = useReducer(ProjectReducer, INITIAL_STATE);
   const { notification } = App.useApp();
 
-  const getProjects = async () => {
+  const getAllProjects = async () => {
     dispatch(getProjectsPending());
     await instance
       .get("/projects")
       .then((response) => {
         console.log(response.data);
         dispatch(getProjectsSuccess(response.data));
+        notification.success({
+          title: "Successfully fetched projects",
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching projects:", error);
+        dispatch(getProjectsError());
+        notification.error({
+          title: "Failed to fetch projects",
+          description: error.message,
+        });
+      });
+  };
+
+  const getUserProjects = async (userId: string) => {
+    dispatch(getProjectsPending());
+    await instance
+      .get("/projects")
+      .then((response) => {
+        console.log(response.data);
+        const userProjects = response.data.filter(
+          (project: IProject) => project.user_id === userId,
+        );
+
+        if (userProjects.length === 0) {
+          notification.info({
+            title: "No projects found for this user",
+          });
+          return;
+        }
+
+        dispatch(getProjectsSuccess(userProjects));
         notification.success({
           title: "Successfully fetched projects",
         });
@@ -80,6 +112,8 @@ export const ProjectProvider = ({
       .then((response) => {
         console.log(response.data);
         dispatch(createProjectSuccess(response.data));
+        getUserProjects(project.user_id);
+        state.projects.sort((a, b) => b.points - a.points);
         notification.success({
           title: "Successfully created project",
         });
@@ -118,7 +152,14 @@ export const ProjectProvider = ({
     await instance
       .delete(`/projects/${id}`)
       .then(() => {
-        dispatch(deleteProjectSuccess());
+        dispatch(
+          deleteProjectSuccess(
+            state.projects?.filter((project) => project.id !== id) || [],
+          ),
+        );
+        notification.success({
+          title: "Successfully deleted project",
+        });
       })
       .catch((error) => {
         console.error("Error deleting project:", error);
@@ -136,7 +177,8 @@ export const ProjectProvider = ({
         value={{
           createProject,
           getProject,
-          getProjects,
+          getAllProjects,
+          getUserProjects,
           updateProject,
           deleteProject,
         }}

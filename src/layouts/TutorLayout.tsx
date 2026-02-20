@@ -3,8 +3,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   BarChartOutlined,
-  UserOutlined,
   LogoutOutlined,
+  ProjectOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Flex, Layout, Menu, theme } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -12,13 +12,11 @@ import getUserObject from "../utils/getUserObject";
 
 const { Header, Sider, Content } = Layout;
 
-const StudentLayout = () => {
+const TutorLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
-  const navigate = useNavigate();
 
   return (
     <Layout style={{ height: "100vh", margin: -8 }}>
@@ -43,10 +41,10 @@ const StudentLayout = () => {
           items={[
             {
               key: "1",
-              icon: <UserOutlined />,
-              label: "My Projects",
+              icon: <ProjectOutlined />,
+              label: "All Projects",
               onClick: () => {
-                navigate("/projects");
+                navigate("/tutor");
               },
             },
             {
@@ -54,7 +52,7 @@ const StudentLayout = () => {
               icon: <BarChartOutlined />,
               label: "Leaderboard",
               onClick: () => {
-                navigate("/projects/leaderboard");
+                navigate("/tutor/leaderboard");
               },
             },
             {
@@ -104,4 +102,4 @@ const StudentLayout = () => {
   );
 };
 
-export default StudentLayout;
+export default TutorLayout;
