@@ -82,7 +82,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           localStorage.setItem("auth_token", btoa(JSON.stringify(sessionUser)));
           dispatch(loginUserSuccess(sessionUser));
           notification.success({ title: "Logged in successfully" });
-          navigate("/projects");
+          if (sessionUser.isTutor) {
+            navigate("/tutor");
+          } else {
+            navigate("/projects");
+          }
         } else {
           notification.error({ title: "Failed to login" });
           dispatch(loginUserError());

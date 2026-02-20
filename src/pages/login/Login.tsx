@@ -64,7 +64,7 @@ const Login = () => {
         </Button>
       </Form.Item>
       <p>
-        Do not have an account? <NavLink to="/signup">Login</NavLink>
+        Do not have an account? <NavLink to="/signup">Signup</NavLink>
       </p>
     </Form>
   );

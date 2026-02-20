@@ -5,7 +5,6 @@ export interface IProject {
   user_id: string;
   title: string;
   description: string;
-  points: number;
   url: string;
   createdAt?: string;
   image?: string;

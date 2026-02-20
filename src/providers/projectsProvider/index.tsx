@@ -38,7 +38,6 @@ export const ProjectProvider = ({
     await instance
       .get("/projects")
       .then((response) => {
-        console.log(response.data);
         dispatch(getProjectsSuccess(response.data));
         notification.success({
           title: "Successfully fetched projects",
@@ -59,7 +58,6 @@ export const ProjectProvider = ({
     await instance
       .get("/projects")
       .then((response) => {
-        console.log(response.data);
         const userProjects = response.data.filter(
           (project: IProject) => project.user_id === userId,
         );
@@ -90,7 +88,6 @@ export const ProjectProvider = ({
     await instance
       .get(`/projects/${id}`)
       .then((response) => {
-        console.log(response.data);
         dispatch(getProjectSuccess(response.data));
         notification.success({
           title: "Successfully fetched project",
@@ -110,10 +107,9 @@ export const ProjectProvider = ({
     await instance
       .post("/projects", project)
       .then((response) => {
-        console.log(response.data);
         dispatch(createProjectSuccess(response.data));
         getUserProjects(project.user_id);
-        state.projects.sort((a, b) => b.points - a.points);
+        state.projects.sort((a, b) => b.grade - a.grade);
         notification.success({
           title: "Successfully created project",
         });

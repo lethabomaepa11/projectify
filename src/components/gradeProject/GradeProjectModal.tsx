@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, InputNumber, Space, Typography, Tag } from "antd";
 import { IProject } from "../../providers/projectsProvider/context";
 
@@ -17,6 +17,8 @@ const GradeProjectModal: React.FC<GradeProjectModalProps> = ({
   onGrade,
   project,
 }) => {
+  const [grade, setGrade] = useState<number>(project?.grade || 0);
+
   if (!project) return null;
 
   return (
@@ -24,7 +26,7 @@ const GradeProjectModal: React.FC<GradeProjectModalProps> = ({
       title={`Grade Project: ${project.title}`}
       open={visible}
       onCancel={onCancel}
-      onOk={() => onGrade(0)}
+      onOk={() => onGrade(grade)}
       okText="Submit Grade"
       cancelText="Cancel"
       width={600}
@@ -65,7 +67,7 @@ const GradeProjectModal: React.FC<GradeProjectModalProps> = ({
             max={100}
             defaultValue={project.grade || 0}
             style={{ width: "100%" }}
-            onChange={(value) => onGrade(value || 0)}
+            onChange={(value) => setGrade(value || 0)}
           />
         </div>
       </Space>
