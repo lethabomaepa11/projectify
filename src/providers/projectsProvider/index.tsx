@@ -38,7 +38,11 @@ export const ProjectProvider = ({
     await instance
       .get("/projects")
       .then((response) => {
-        dispatch(getProjectsSuccess(response.data));
+        dispatch(
+          getProjectsSuccess(
+            response.data?.sort((a, b) => Number(b.grade) - Number(a.grade)),
+          ),
+        );
         notification.success({
           title: "Successfully fetched projects",
         });
@@ -69,7 +73,11 @@ export const ProjectProvider = ({
           return;
         }
 
-        dispatch(getProjectsSuccess(userProjects));
+        dispatch(
+          getProjectsSuccess(
+            userProjects?.sort((a, b) => Number(b.grade) - Number(a.grade)),
+          ),
+        );
         notification.success({
           title: "Successfully fetched projects",
         });
@@ -109,7 +117,7 @@ export const ProjectProvider = ({
       .then((response) => {
         dispatch(createProjectSuccess(response.data));
         getUserProjects(project.user_id);
-        state.projects.sort((a, b) => b.grade - a.grade);
+        state.projects?.sort((a, b) => Number(b.grade) - Number(a.grade));
         notification.success({
           title: "Successfully created project",
         });
