@@ -109,11 +109,12 @@ export const deleteProjectError = createAction<IProjectStateContext>(
   ProjectActionEnums.deleteProjectError,
   () => ({ isPending: false, isError: true, isSuccess: false }),
 );
-export const deleteProjectSuccess = createAction<IProjectStateContext>(
-  ProjectActionEnums.deleteProjectSuccess,
-  () => ({
-    isPending: false,
-    isError: false,
-    isSuccess: true,
-  }),
-);
+export const deleteProjectSuccess = createAction<
+  IProjectStateContext,
+  IProject[]
+>(ProjectActionEnums.deleteProjectSuccess, (projects: IProject[]) => ({
+  isPending: false,
+  isError: false,
+  isSuccess: true,
+  projects,
+}));

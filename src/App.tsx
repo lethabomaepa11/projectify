@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/login/Login";
 import AuthLayout from "./layouts/AuthLayout";
 import Signup from "./pages/signup/Signup";
-import EmptyLayout from "./layouts/EmptyLayout";
+import TutorLayout from "./layouts/TutorLayout";
 import Tutor from "./pages/tutor/Tutor";
 import StudentLayout from "./layouts/StudentLayout";
 import Projects from "./pages/projects/Projects";
@@ -26,8 +26,9 @@ function MyApp() {
         </Route>
 
         {/* Tutor */}
-        <Route path="/tutor" element={<EmptyLayout />}>
+        <Route path="/tutor" element={<TutorLayout />}>
           <Route index element={<Tutor />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
         </Route>
       </Routes>
     </>

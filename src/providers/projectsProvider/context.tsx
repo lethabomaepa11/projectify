@@ -7,7 +7,11 @@ export interface IProject {
   description: string;
   points: number;
   url: string;
+  createdAt?: string;
   image?: string;
+  studentName?: string;
+  grade?: number;
+  status?: string;
 }
 
 export interface IProjectStateContext {
@@ -23,7 +27,8 @@ export interface IProjectActionContext {
   createProject: (project: IProject) => void;
   //read
   getProject: (id: string) => void;
-  getProjects: () => void;
+  getAllProjects: () => void;
+  getUserProjects: (userId: string) => void;
   //update
   updateProject: (project: IProject) => void;
   //delete

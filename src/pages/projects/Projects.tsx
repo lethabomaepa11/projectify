@@ -3,25 +3,30 @@ import {
   useProjectActions,
   useProjectState,
 } from "../../providers/projectsProvider";
-import { Avatar, Card, Flex, Image } from "antd";
+import { App, Button, Card, Flex, Image } from "antd";
 import {
+  DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import CreateProjectModal from "../../components/createProject/CreateProjectModal";
+import getUserObject from "../../utils/getUserObject";
 
 const Projects = () => {
-  const { getProjects } = useProjectActions();
+  const { getUserProjects, deleteProject } = useProjectActions();
   const { isPending, projects, isSuccess } = useProjectState();
+  const { modal } = App.useApp();
 
   useEffect(() => {
-    getProjects();
-    console.log(projects);
+    getUserProjects(getUserObject()?.id || "");
   }, []);
 
   return (
     <>
-      {isPending && <div>Loading projects...</div>}
+      <div>
+        <CreateProjectModal />
+      </div>
       {isSuccess && projects.length > 0 ? (
         <Flex wrap="wrap" gap="16px" style={{ overflow: "auto" }}>
           {projects.map((project) => (
@@ -30,7 +35,17 @@ const Projects = () => {
               style={{ width: 300 }}
               title={project.title}
               actions={[
-                <SettingOutlined key="setting" />,
+                <DeleteOutlined
+                  onClick={() => {
+                    modal.confirm({
+                      title: "Delete Project",
+                      content: "Are you sure you want to delete this project?",
+                      onOk: () => deleteProject(project.id),
+                    });
+                  }}
+                  style={{ color: "red" }}
+                  key="delete"
+                />,
                 <EditOutlined key="edit" />,
                 <EllipsisOutlined key="ellipsis" />,
               ]}
