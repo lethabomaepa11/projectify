@@ -32,16 +32,6 @@ const CreateProjectModal = () => {
     console.log("Failed:", errorInfo);
   };
 
-  // export interface IProject {
-  //   id: string;
-  //   user_id: string;
-  //   title: string;
-  //   description: string;
-  //   points: number;
-  //   url: string;
-  //   image?: string;
-  // }
-
   return (
     <>
       <Button style={{ margin: 20 }} type="primary" onClick={showModal}>

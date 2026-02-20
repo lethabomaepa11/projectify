@@ -84,10 +84,6 @@ const Tutor = () => {
                 width={250}
                 height={250}
               />
-              <div style={{ marginTop: 16 }}>
-                <Text strong>Student: </Text>
-                <Text>{project.studentName || "Unknown Student"}</Text>
-              </div>
               <div style={{ marginTop: 8 }}>
                 <Text strong>Status: </Text>
                 <Tag color={project.status === "graded" ? "blue" : "default"}>

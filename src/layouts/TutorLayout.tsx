@@ -19,13 +19,6 @@ const TutorLayout = () => {
   } = theme.useToken();
   const navigate = useNavigate();
 
-  // Check if user is authenticated and is a tutor
-  const user = getUserObject();
-  if (!user || user.role !== "tutor") {
-    navigate("/login");
-    return null;
-  }
-
   return (
     <Layout style={{ height: "100vh", margin: -8 }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
